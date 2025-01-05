@@ -12,8 +12,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login").permitAll() // Allow access to the login page
-                .anyRequest().authenticated(); // Protect other pages
+                .antMatchers("/auth/login", "/").permitAll()
+                .anyRequest().authenticated();
         return http.build();
     }
 }
