@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Content Library</title>
+</head>
+<body>
+<h1>Content Library</h1>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>YouTube Link</th>
+    </tr>
+    <tr th:each="content : ${contentList}">
+        <td th:text="${content.title}"></td>
+        <td th:text="${content.description}"></td>
+        <td><a th:href="${content.youtubeLink}" target="_blank">View</a></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Content</title>
+</head>
+<body>
+<h1>Manage Content</h1>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>YouTube Link</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="content : ${pendingContent}">
+        <td th:text="${content.title}"></td>
+        <td th:text="${content.description}"></td>
+        <td>
+            <a th:if="${content.youtubeLink != null}" th:href="${content.youtubeLink}" target="_blank">View</a>
+            <span th:if="${content.youtubeLink == null}">No Link</span>
+        </td>
+        <td>
+            <form method="post" th:action="@{'/content/manage/' + ${content.id} + '/approve'}">
+                <button type="submit">Approve</button>
+            </form>
+            <form method="post" th:action="@{'/content/manage/' + ${content.id} + '/reject'}">
+                <button type="submit">Reject</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
