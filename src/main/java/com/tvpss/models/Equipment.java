@@ -1,33 +1,23 @@
 package com.tvpss.models;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "equipment")
 public class Equipment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "user_id", nullable = false)
-    private int userId;
-
+    private Long id;
+    private int userId; // Foreign key to the user who owns the equipment
     private String name;
     private boolean logo;
     private boolean miniStudio;
     private boolean inSchoolRecording;
-    private boolean uploadOnYoutube;
+    private boolean uploadOnYouTube;
     private boolean recordingInsideOutside;
     private boolean externalAgencyCollaboration;
     private boolean greenScreenTechnology;
 
-    // Getters and setters
-    public int getId() {
+    // Getters and Setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,12 +61,12 @@ public class Equipment {
         this.inSchoolRecording = inSchoolRecording;
     }
 
-    public boolean isUploadOnYoutube() {
-        return uploadOnYoutube;
+    public boolean isUploadOnYouTube() {
+        return uploadOnYouTube;
     }
 
-    public void setUploadOnYoutube(boolean uploadOnYoutube) {
-        this.uploadOnYoutube = uploadOnYoutube;
+    public void setUploadOnYouTube(boolean uploadOnYouTube) {
+        this.uploadOnYouTube = uploadOnYouTube;
     }
 
     public boolean isRecordingInsideOutside() {

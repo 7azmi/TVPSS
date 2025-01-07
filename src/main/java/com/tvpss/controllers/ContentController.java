@@ -40,15 +40,27 @@ public class ContentController {
                                 HttpSession session,
                                 Model model) {
         try {
-            int userId = (int) session.getAttribute("user_id");
-            contentRepository.addContent(title, description, youtubeLink, "TODO");
+            // Get the userId from the session
+            Integer userId = (Integer) session.getAttribute("user_id");
+            if (userId == null) {
+                model.addAttribute("error", "You must be logged in to upload content.");
+                return "error";
+            }
+
+            // Call repository to add content
+            contentRepository.addContent(userId, title, description, youtubeLink);
+
+            // Success message
             model.addAttribute("message", "Content uploaded successfully and is pending approval.");
             return "upload_content";
         } catch (Exception e) {
+            // Log the error for debugging
+            e.printStackTrace();
             model.addAttribute("error", "Unable to upload content. Please try again.");
             return "error";
         }
     }
+
 
     @GetMapping("/manage")
     public String manageContent(Model model) {

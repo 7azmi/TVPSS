@@ -22,6 +22,10 @@ public class AuthController {
                         @RequestParam String password,
                         Model model,
                         HttpSession session) {
+        if (session == null) {
+            throw new IllegalStateException("HttpSession is not properly injected.");
+        }
+        System.out.println("Session ID: " + session.getId());
         User user = userRepository.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("user_id", user.getId());
