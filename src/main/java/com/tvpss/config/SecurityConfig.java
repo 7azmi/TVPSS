@@ -10,10 +10,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable() // Disable CSRF for simplicity in development
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/auth/login", "/auth/register").permitAll() // Allow public access to login and registration
-                .anyRequest().authenticated(); // Restrict all other endpoints
+                .antMatchers("/", "/auth/login", "/auth/register").permitAll()
+                .antMatchers("/content/library", "/content/upload", "/content/manage").permitAll() // Allow all access for development
+                .anyRequest().authenticated();
         return http.build();
     }
 }
