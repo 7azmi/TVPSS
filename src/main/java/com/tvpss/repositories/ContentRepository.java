@@ -1,10 +1,11 @@
 package com.tvpss.repositories;
 
+import com.tvpss.models.Content;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class ContentRepository {
@@ -15,19 +16,29 @@ public class ContentRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Map<String, Object>> findAllContent() {
-        String sql = "SELECT * FROM content";
-        return jdbcTemplate.queryForList(sql);
-    }
-
-    public List<Map<String, Object>> findPendingContent() {
-        String sql = "SELECT * FROM content WHERE status = 'PENDING'";
-        return jdbcTemplate.queryForList(sql);
-    }
+    private final RowMapper<Content> contentRowMapper = (rs, rowNum) -> {
+        Content content = new Content();
+        content.setId(rs.getLong("id"));
+        content.setTitle(rs.getString("title"));
+        content.setDescription(rs.getString("description"));
+        content.setYoutubeLink(rs.getString("youtube_link"));
+        content.setStatus(rs.getString("status"));
+        return content;
+    };
 
     public int updateContentStatus(long id, String status) {
         String sql = "UPDATE content SET status = ? WHERE id = ?";
         return jdbcTemplate.update(sql, status, id);
+    }
+
+    public List<Content> findPendingContent() {
+        String sql = "SELECT * FROM content WHERE status = 'PENDING'";
+        return jdbcTemplate.query(sql, contentRowMapper);
+    }
+
+    public List<Content> findApprovedContent() {
+        String sql = "SELECT * FROM content WHERE status = 'APPROVED'";
+        return jdbcTemplate.query(sql, contentRowMapper);
     }
 
     public int addContent(String title, String description, String youtubeLink, String uploadedBy) {
