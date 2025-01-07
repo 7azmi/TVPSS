@@ -1,5 +1,6 @@
 package com.tvpss.models;
 
+
 import javax.persistence.*;
 
 @Entity

@@ -2,10 +2,13 @@ package com.tvpss.controllers;
 
 import com.tvpss.models.Content;
 import com.tvpss.repositories.ContentRepository;
-import jakarta.servlet.http.HttpSession;
+//import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/content")
