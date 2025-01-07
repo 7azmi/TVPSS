@@ -1,23 +1,29 @@
-//package com.tvpss.controllers;
-//
-//import com.tvpss.DummyDatabase;
-//import org.springframework.web.bind.annotation.*;
-//import java.util.*;
-//
-//@RestController
-//@RequestMapping("/equipment")
-//public class ProfileController {
-//
-//    @GetMapping("/list")
-//    public List<Map<String, Object>> getEquipmentList() {
-//        return DummyDatabase.equipment;
-//    }
-//
-//    @PostMapping("/request")
-//    public String requestEquipment(@RequestParam String equipmentName) {
-//        DummyDatabase.equipment.add(Map.of("id", DummyDatabase.equipment.size() + 1,
-//                "name", equipmentName,
-//                "version", "Requested"));
-//        return "Equipment request submitted successfully!";
-//    }
-//}
+package com.tvpss.controllers;
+
+import com.tvpss.repositories.EquipmentRepository;
+import com.tvpss.models.Equipment;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/equipment")
+public class ProfileController {
+
+    private final EquipmentRepository equipmentRepository;
+
+    public ProfileController(EquipmentRepository equipmentRepository) {
+        this.equipmentRepository = equipmentRepository;
+    }
+
+    @GetMapping("/list/{userId}")
+    public List<Equipment> getEquipmentList(@PathVariable int userId) {
+        return equipmentRepository.findEquipmentByUserId(userId);
+    }
+
+    @PostMapping("/add")
+    public String addEquipment(@RequestBody Equipment equipment) {
+        equipmentRepository.save(equipment);
+        return "Equipment added successfully!";
+    }
+}
