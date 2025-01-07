@@ -41,8 +41,9 @@ public class ContentRepository {
         return jdbcTemplate.query(sql, contentRowMapper);
     }
 
-    public int addContent(String title, String description, String youtubeLink, String uploadedBy) {
-        String sql = "INSERT INTO content (title, description, youtube_link, status, uploaded_by) VALUES (?, ?, ?, 'PENDING', ?)";
-        return jdbcTemplate.update(sql, title, description, youtubeLink, uploadedBy);
+    public int addContent(int userId, String title, String description, String youtubeLink) {
+        String sql = "INSERT INTO content (user_id, title, description, youtube_link, status) VALUES (?, ?, ?, ?, 'PENDING')";
+        return jdbcTemplate.update(sql, userId, title, description, youtubeLink);
     }
+
 }
