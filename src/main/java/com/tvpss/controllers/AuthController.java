@@ -4,21 +4,29 @@ import com.tvpss.DummyDatabase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
+import javax.servlet.http.HttpSession; // Import HttpSession
+import java.util.Map;
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+    public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        Model model,
+                        HttpSession session) { // Inject HttpSession as a parameter
         System.out.println("Login request received: " + username);
 
         for (Map<String, Object> user : DummyDatabase.users) {
             if (user.get("username").equals(username) && user.get("password").equals(password)) {
                 System.out.println("Login successful for user: " + username);
                 model.addAttribute("message", "Login successful! Welcome, " + username + ".");
+
+                // Set user role in the session
+                session.setAttribute("role", user.get("role"));
+                session.setAttribute("username", username); // Optionally store the username
+
                 return "dashboard"; // Redirect to the dashboard page
             }
         }
@@ -29,7 +37,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password, @RequestParam String role, Model model) {
+    public String register(@RequestParam String username,
+                           @RequestParam String password,
+                           @RequestParam String role,
+                           Model model) {
         System.out.println("Registration request received: " + username + " with role: " + role);
 
         if (!role.equals("SCHOOL_REP") && !role.equals("STUDENT")) {
