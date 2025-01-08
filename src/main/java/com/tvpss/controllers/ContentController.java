@@ -4,6 +4,7 @@ import com.tvpss.models.Content;
 import com.tvpss.repositories.ContentRepository;
 //import jakarta.servlet.http.HttpSession;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class ContentController {
     }
 
     @GetMapping("/library")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String viewContentLibrary(Model model) {
         try {
             model.addAttribute("contentList", contentRepository.findApprovedContent());

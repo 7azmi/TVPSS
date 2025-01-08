@@ -2,12 +2,15 @@ package com.tvpss.controllers;
 
 import com.tvpss.models.User;
 import com.tvpss.repositories.UserRepository;
-
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-// import jakarta.servlet.http.HttpSession;
+
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 
 @Controller
 @RequestMapping("/auth")
@@ -22,32 +25,42 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
-                        Model model,
-                        HttpSession session) {
-        if (session == null) {
-            throw new IllegalStateException("HttpSession is not properly injected.");
-        }
-        System.out.println("Session ID: " + session.getId());
+                        Model model) {
         User user = userRepository.findByUsername(username);
+
+        // Validate user credentials
         if (user != null && user.getPassword().equals(password)) {
-            session.setAttribute("user_id", user.getId());
-            session.setAttribute("role", user.getRole());
-            session.setAttribute("username", user.getUsername());
+            // Create an Authentication object with roles
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(
+                            user.getUsername(),
+                            null,
+                            Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
+
+            // Set the Authentication object in the SecurityContext
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+
             return "redirect:/dashboard";
         }
+
+        // Invalid credentials
         model.addAttribute("error", "Invalid credentials. Please try again.");
         return "login";
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session, Model model) {
-        if (session.getAttribute("user_id") == null) {
-            model.addAttribute("error", "Session expired. Please log in again.");
-            return "login";
-        }
+    public String dashboard(Model model) {
+        // Get the authenticated user's details
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String role = SecurityContextHolder.getContext().getAuthentication()
+                .getAuthorities()
+                .stream()
+                .findFirst()
+                .map(Object::toString)
+                .orElse("UNKNOWN");
 
-        model.addAttribute("username", session.getAttribute("username"));
-        model.addAttribute("role", session.getAttribute("role"));
+        model.addAttribute("username", username);
+        model.addAttribute("role", role);
         return "dashboard";
     }
 
