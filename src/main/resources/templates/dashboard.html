@@ -11,7 +11,7 @@
 <ul>
     <!-- Add role-based actions -->
     <li th:if="${role == 'SCHOOL_REP' || role == 'ADMIN'}">
-        <a href="/schools">View School List</a>
+        <a href="equipment/schools">View School List</a>
     </li>
     <li th:if="${role == 'SCHOOL_REP'}">
         <a href="/equipment/update">Update Equipment List</a>

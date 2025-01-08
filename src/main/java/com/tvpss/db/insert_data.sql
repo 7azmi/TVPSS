@@ -1,21 +1,19 @@
--- Use the database
 USE tvpss;
 
--- Insert users
-INSERT INTO users (username, password, role) VALUES
-                                                 ('admin', 'admin123', 'ADMIN'),
-                                                 ('schoolRep', 'rep123', 'SCHOOL_REP'),
-                                                 ('student', 'student123', 'STUDENT');
+-- Insert dummy data into 'users'
+INSERT INTO users (username, password, role, name, email, phone_number) VALUES
+                                                                            ('student', 'student', 'STUDENT', 'Ahmed Ghaleb', 'john.doe@example.com', '1234567890'),
+                                                                            ('admin', 'admin', 'ADMIN', '7azmi', 'jane.admin@example.com', '0987654321'),
+                                                                            ('schoolRep', 'schoolRep', 'SCHOOL_REP', 'UTM sekolah', 'abc.school@example.com', '1122334455');
 
--- Insert content
+-- Insert dummy data into 'equipment'
+INSERT INTO equipment (user_id, logo, mini_studio, in_school_recording, upload_on_youtube, recording_inside_outside, external_agency_collaboration, green_screen_technology) VALUES
+                                                                                                                                                                                 (1, 1, 1, 1, 1, 1, 0, 1),
+                                                                                                                                                                                 (2, 0, 0, 0, 1, 0, 1, 0),
+                                                                                                                                                                                 (3, 1, 1, 1, 1, 1, 1, 1);
+
+-- Insert dummy data into 'content'
 INSERT INTO content (title, description, youtube_link, status, user_id) VALUES
-                                                                            ('Mathematics Lesson 1', 'Introduction to Algebra', 'https://youtube.com/example1', 'APPROVED', 2), -- Associated with 'schoolRep'
-                                                                            ('Science Experiment', 'Understanding Newtons Laws', 'https://youtube.com/example2', 'PENDING', 3); -- Associated with 'student'
-
--- Insert equipment
-INSERT INTO equipment (user_id, name, logo, mini_studio, in_school_recording, upload_on_youtube, recording_inside_outside, external_agency_collaboration, green_screen_technology)
-VALUES
-    (1, 'Mini Studio', TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE), -- Associated with 'admin'
-    (2, 'Green Screen Technology', TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE), -- Associated with 'schoolRep'
-    (3, 'In-School Recording', FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE), -- Associated with 'student'
-    (1, 'YouTube Upload Capability', TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE); -- Associated with 'admin'
+                                                                            ('Video 1', 'Description for video 1', 'https://youtube.com/video1', 'APPROVED', 1),
+                                                                            ('Video 2', 'Description for video 2', 'https://youtube.com/video2', 'PENDING', 2),
+                                                                            ('School Promo', 'Promotional video for school', 'https://youtube.com/promo', 'APPROVED', 3);

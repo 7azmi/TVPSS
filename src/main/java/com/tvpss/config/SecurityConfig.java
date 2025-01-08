@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .antMatchers("/content/manage", "/content/manage/*").hasAuthority("ADMIN") // Only ADMIN can manage content
                 .antMatchers("/content/library").authenticated() // Any authenticated user can view the content library
                 .antMatchers("/equipment/update").hasAuthority("SCHOOL_REP")
-                .antMatchers("/schools").hasAnyAuthority("ADMIN", "SCHOOL_REP")
+                .antMatchers("equipment/schools").hasAnyAuthority("ADMIN", "SCHOOL_REP")
                 .anyRequest().authenticated(); // Restrict all other endpoints
         return http.build();
     }
