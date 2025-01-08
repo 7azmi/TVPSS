@@ -2,18 +2,37 @@
 <html>
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-<h1>Welcome to the Dashboard</h1>
-<p>This is your main page after logging in.</p>
+<h1>Welcome, <span th:text="${username}"></span>!</h1>
+<p>Role: <span th:text="${role}"></span></p>
 
-<nav>
-    <ul>
-        <li><a href="/content/library">View Content Library</a></li>
-        <li><a href="/content/upload">Upload Content</a></li>
-        <li><a href="/content/manage">Manage Content (Admin)</a></li>
-    </ul>
-</nav>
+<h2>Available Actions</h2>
+<ul>
+    <!-- Add role-based actions -->
+    <li th:if="${role == 'SCHOOL_REP' || role == 'ADMIN'}">
+        <a href="/schools">View School List</a>
+    </li>
+    <li th:if="${role == 'SCHOOL_REP'}">
+        <a href="/equipment/update">Update Equipment List</a>
+    </li>
+    <li th:if="${role == 'ADMIN'}">
+        <a href="/content/manage">Manage Content</a>
+    </li>
+    <li th:if="${role == 'STUDENT' || role == 'SCHOOL_REP' || role == 'ADMIN'}">
+        <a href="/content/library">View Content Library</a>
+    </li>
+    <li th:if="${role == 'SCHOOL_REP'}">
+        <a href="/content/upload">Upload Content</a>
+    </li>
+</ul>
+
+<!-- Logout Button -->
+<form method="post" action="/auth/logout">
+    <button type="submit">Logout</button>
+</form>
+
+<p th:if="${message}" th:text="${message}"></p>
+<p th:if="${error}" th:text="${error}"></p>
 </body>
 </html>

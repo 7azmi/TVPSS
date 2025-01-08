@@ -10,13 +10,16 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable()//.cors().and()
                 .authorizeRequests()
                 .antMatchers("/", "/auth/login", "/auth/register").permitAll()
+                .antMatchers("/auth/logout").authenticated()
                 .antMatchers("/dashboard").hasAnyAuthority("ADMIN", "SCHOOL_REP", "STUDENT") // Allow all roles to access the dashboard
                 .antMatchers("/content/upload").hasAuthority("SCHOOL_REP") // Only SCHOOL_REP can upload
                 .antMatchers("/content/manage", "/content/manage/*").hasAuthority("ADMIN") // Only ADMIN can manage content
                 .antMatchers("/content/library").authenticated() // Any authenticated user can view the content library
+                .antMatchers("/equipment/update").hasAuthority("SCHOOL_REP")
+                .antMatchers("/schools").hasAnyAuthority("ADMIN", "SCHOOL_REP")
                 .anyRequest().authenticated(); // Restrict all other endpoints
         return http.build();
     }

@@ -25,7 +25,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
-                        Model model) {
+                        Model model, HttpSession session) {
         User user = userRepository.findByUsername(username);
 
         // Validate user credentials
@@ -39,6 +39,9 @@ public class AuthController {
 
             // Set the Authentication object in the SecurityContext
             SecurityContextHolder.getContext().setAuthentication(authToken);
+            session.setAttribute("user_id", user.getId());
+            session.setAttribute("role", user.getRole());
+            session.setAttribute("username", user.getUsername());
 
             return "redirect:/dashboard";
         }
@@ -48,21 +51,6 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        // Get the authenticated user's details
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        String role = SecurityContextHolder.getContext().getAuthentication()
-                .getAuthorities()
-                .stream()
-                .findFirst()
-                .map(Object::toString)
-                .orElse("UNKNOWN");
-
-        model.addAttribute("username", username);
-        model.addAttribute("role", role);
-        return "dashboard";
-    }
 
     @PostMapping("/register")
     public String register(@RequestParam String username,
@@ -83,4 +71,14 @@ public class AuthController {
         model.addAttribute("message", "User registered successfully! Please log in.");
         return "login";
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpSession session, Model model) {
+        if (session != null) {
+            session.invalidate(); // Invalidate the session to log out the user
+        }
+        model.addAttribute("message", "You have been logged out successfully.");
+        return "login";
+    }
+
 }

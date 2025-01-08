@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Equipment Management</title>
-    <link rel="stylesheet" href="/static/css/main.css">
+    <title>School List</title>
 </head>
 <body>
-<h1>Equipment Management</h1>
-
-<h2>Available Equipment</h2>
-<table border="1">
+<h1>School List</h1>
+<table>
     <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Version</th>
+        <th>School Name</th>
+        <th>Equipment</th>
     </tr>
-    <tbody id="equipment-table">
-    <!-- Dynamic content -->
-    </tbody>
+    <tr th:each="equipment : ${equipmentList}">
+        <td th:text="${equipment.schoolName}"></td>
+        <td th:text="${equipment.name}"></td>
+    </tr>
 </table>
-
-<h2>Request Equipment</h2>
-<form action="/equipment/request" method="post">
-    <label for="equipment-name">Equipment Name:</label>
-    <input type="text" id="equipment-name" name="equipmentName" required>
-    <button type="submit">Request</button>
-</form>
 </body>
 </html>
