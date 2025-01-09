@@ -1,3 +1,4 @@
+// Updated ContentRepository.java
 package com.tvpss.repositories;
 
 import com.tvpss.models.Content;
@@ -16,20 +17,20 @@ public class ContentRepository {
     }
 
     // Add content
-    public int addContent(int userId, String title, String description, String youtubeLink) {
-        String sql = "INSERT INTO content (user_id, title, description, youtube_link, status) VALUES (?, ?, ?, ?, 'PENDING')";
-        return jdbcTemplate.update(sql, userId, title, description, youtubeLink);
+    public int addContent(int userId, String title, String description, String youtubeLink, String category) {
+        String sql = "INSERT INTO content (user_id, title, description, youtube_link, status, category) VALUES (?, ?, ?, ?, 'PENDING', ?)";
+        return jdbcTemplate.update(sql, userId, title, description, youtubeLink, category);
     }
 
     // Find pending content
     public List<Content> findPendingContent() {
-        String sql = "SELECT id, title, description, youtube_link, status, user_id FROM content WHERE status = 'PENDING'";
+        String sql = "SELECT id, title, description, youtube_link, status, user_id, category FROM content WHERE status = 'PENDING'";
         return jdbcTemplate.query(sql, contentRowMapper);
     }
 
     // Find approved content
     public List<Content> findApprovedContent() {
-        String sql = "SELECT id, title, description, youtube_link, status, user_id FROM content WHERE status = 'APPROVED'";
+        String sql = "SELECT id, title, description, youtube_link, status, user_id, category FROM content WHERE status = 'APPROVED'";
         return jdbcTemplate.query(sql, contentRowMapper);
     }
 
@@ -59,6 +60,7 @@ public class ContentRepository {
         content.setYoutubeLink(rs.getString("youtube_link"));
         content.setStatus(rs.getString("status"));
         content.setUserId(rs.getInt("user_id"));
+        content.setCategory(rs.getString("category"));
         return content;
     };
 }

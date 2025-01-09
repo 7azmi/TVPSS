@@ -42,6 +42,7 @@ public class ContentController {
     public String uploadContent(@RequestParam String title,
                                 @RequestParam String description,
                                 @RequestParam String youtubeLink,
+                                @RequestParam String category, // Added category
                                 HttpSession session,
                                 Model model) {
         try {
@@ -53,7 +54,7 @@ public class ContentController {
             }
 
             // Call repository to add content
-            contentRepository.addContent(userId, title, description, youtubeLink);
+            contentRepository.addContent(userId, title, description, youtubeLink, category); // Updated with category
 
             // Success message
             model.addAttribute("message", "Content uploaded successfully and is pending approval.");
@@ -65,6 +66,7 @@ public class ContentController {
             return "error";
         }
     }
+
 
 
     @GetMapping("/manage")

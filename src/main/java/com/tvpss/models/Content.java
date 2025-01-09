@@ -7,6 +7,7 @@ public class Content {
     private String youtubeLink;
     private String status; // PENDING, APPROVED, REJECTED
     private int userId; // Foreign key to the user who uploaded the content
+    private String category; // New field
 
     // Getters and Setters
     public Long getId() {
@@ -55,5 +56,13 @@ public class Content {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

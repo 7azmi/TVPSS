@@ -1,3 +1,5 @@
+
+// Updated UserRepository.java
 package com.tvpss.repositories;
 
 import com.tvpss.models.User;
@@ -6,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class UserRepository {
@@ -26,19 +27,19 @@ public class UserRepository {
 
     // Save a new user
     public int save(User user) {
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
-        return jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole());
+        String sql = "INSERT INTO users (username, password, role, name, email, phone_number) VALUES (?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole(), user.getName(), user.getEmail(), user.getPhoneNumber());
     }
 
-    // (Optional) Find user by username as Map (existing method)
-    public Map<String, Object> findUserByUsername(String username) {
-        String sql = "SELECT * FROM users WHERE username = ?";
-        return jdbcTemplate.queryForMap(sql, username);
+    // Find a user by ID
+    public User findById(int id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), id);
     }
 
-    // (Optional) Add user with direct parameters (existing method)
-    public int addUser(String username, String password, String role) {
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
-        return jdbcTemplate.update(sql, username, password, role);
+    // Update a user
+    public int updateUser(User user) {
+        String sql = "UPDATE users SET username = ?, password = ?, role = ?, name = ?, email = ?, phone_number = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole(), user.getName(), user.getEmail(), user.getPhoneNumber(), user.getId());
     }
 }

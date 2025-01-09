@@ -56,6 +56,9 @@ public class AuthController {
     public String register(@RequestParam String username,
                            @RequestParam String password,
                            @RequestParam String role,
+                           @RequestParam(required = false) String name,
+                           @RequestParam(required = false) String email,
+                           @RequestParam(required = false) String phoneNumber,
                            Model model) {
         if (!role.equals("SCHOOL_REP") && !role.equals("STUDENT")) {
             model.addAttribute("error", "Invalid role. Only School Representatives and Students can register.");
@@ -67,7 +70,8 @@ public class AuthController {
             return "login";
         }
 
-        userRepository.save(new User(username, password, role));
+        User newUser = new User(username, password, role, name, email, phoneNumber);
+        userRepository.save(newUser);
         model.addAttribute("message", "User registered successfully! Please log in.");
         return "login";
     }

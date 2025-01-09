@@ -1,9 +1,7 @@
 package com.tvpss.models;
 
 public class Equipment {
-    private Long id;
-    private int userId; // Foreign key to the user who owns the equipment
-    private String name;
+    private int userId; // Now the primary key
     private boolean logo;
     private boolean miniStudio;
     private boolean inSchoolRecording;
@@ -13,28 +11,12 @@ public class Equipment {
     private boolean greenScreenTechnology;
 
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public int getUserId() {
         return userId;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public boolean isLogo() {
