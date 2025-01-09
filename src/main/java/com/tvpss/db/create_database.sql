@@ -37,6 +37,7 @@ CREATE TABLE content (
                          youtube_link VARCHAR(255),
                          status VARCHAR(20) DEFAULT 'PENDING',
                          user_id INT NOT NULL,
+                         category VARCHAR(100) NOT NULL,
                          PRIMARY KEY (id),
                          CONSTRAINT fk_user_content FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
