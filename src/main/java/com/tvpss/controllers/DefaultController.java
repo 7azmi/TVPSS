@@ -38,4 +38,17 @@ public class DefaultController {
 
         return "dashboard";
     }
+
+    @GetMapping("/profile")
+    public String profile(HttpSession session, Model model) {
+        if (session.getAttribute("user_id") == null) {
+            model.addAttribute("error", "Session expired. Please log in again.");
+            return "login";
+        }
+
+        model.addAttribute("username", session.getAttribute("username"));
+        model.addAttribute("role", session.getAttribute("role"));
+        return "profile"; // Renders profile.html
+    }
+
 }

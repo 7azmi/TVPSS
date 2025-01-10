@@ -42,4 +42,10 @@ public class UserRepository {
         String sql = "UPDATE users SET username = ?, password = ?, role = ?, name = ?, email = ?, phone_number = ? WHERE id = ?";
         return jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getRole(), user.getName(), user.getEmail(), user.getPhoneNumber(), user.getId());
     }
+
+    public int updateUserDetails(int userId, String name, String email, String phoneNumber) {
+        String sql = "UPDATE users SET name = ?, email = ?, phone_number = ? WHERE id = ?";
+        return jdbcTemplate.update(sql, name, email, phoneNumber, userId);
+    }
+
 }

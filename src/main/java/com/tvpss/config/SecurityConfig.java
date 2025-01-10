@@ -18,8 +18,8 @@ public class SecurityConfig {
                 .antMatchers("/content/upload").hasAuthority("SCHOOL_REP") // Only SCHOOL_REP can upload
                 .antMatchers("/content/manage", "/content/manage/*").hasAuthority("ADMIN") // Only ADMIN can manage content
                 .antMatchers("/content/library").authenticated() // Any authenticated user can view the content library
-                .antMatchers("/equipment/update").hasAuthority("SCHOOL_REP")
-                .antMatchers("equipment/schools").hasAnyAuthority("ADMIN", "SCHOOL_REP")
+                .antMatchers("/profile/equipment/update").hasAuthority("SCHOOL_REP")
+                .antMatchers("profile/schools").hasAnyAuthority("ADMIN", "SCHOOL_REP")
                 .anyRequest().authenticated(); // Restrict all other endpoints
         return http.build();
     }

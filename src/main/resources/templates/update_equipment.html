@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Equipment</title>
+</head>
+<body>
+<h1>Update Equipment</h1>
+<form method="post" action="/profile/equipment/update">
+    <label for="logo">Logo:</label>
+    <input type="checkbox" id="logo" name="logo" value="true" th:checked="${equipment.logo}"><br>
+
+    <label for="miniStudio">Mini Studio:</label>
+    <input type="checkbox" id="miniStudio" name="miniStudio" value="true" th:checked="${equipment.miniStudio}"><br>
+
+    <label for="inSchoolRecording">In-School Recording:</label>
+    <input type="checkbox" id="inSchoolRecording" name="inSchoolRecording" value="true" th:checked="${equipment.inSchoolRecording}"><br>
+
+    <label for="uploadOnYouTube">Upload on YouTube:</label>
+    <input type="checkbox" id="uploadOnYoutube" name="uploadOnYouTube" value="true" th:checked="${equipment.uploadOnYoutube}"><br>
+
+    <label for="recordingInsideOutside">Recording Inside/Outside:</label>
+    <input type="checkbox" id="recordingInsideOutside" name="recordingInsideOutside" value="true" th:checked="${equipment.recordingInsideOutside}"><br>
+
+    <label for="externalAgencyCollaboration">External Agency Collaboration:</label>
+    <input type="checkbox" id="externalAgencyCollaboration" name="externalAgencyCollaboration" value="true" th:checked="${equipment.externalAgencyCollaboration}"><br>
+
+    <label for="greenScreenTechnology">Green Screen Technology:</label>
+    <input type="checkbox" id="greenScreenTechnology" name="greenScreenTechnology" value="true" th:checked="${equipment.greenScreenTechnology}"><br>
+
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

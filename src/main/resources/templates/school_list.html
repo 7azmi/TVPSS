@@ -4,16 +4,26 @@
     <title>School List</title>
 </head>
 <body>
-<h1>School List</h1>
+<h1>School Representatives</h1>
 <table>
+    <thead>
     <tr>
-        <th>School Name</th>
-        <th>Equipment</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Version</th>
     </tr>
-    <tr th:each="equipment : ${equipmentList}">
-        <td th:text="${equipment.schoolName}"></td>
-        <td th:text="${equipment.name}"></td>
+    </thead>
+    <tbody>
+    <tr th:each="rep : ${schoolReps}">
+        <td th:text="${rep.name}"></td>
+        <td th:text="${rep.username}"></td>
+        <td th:text="${rep.email}"></td>
+        <td th:text="${rep.phone_number}"></td>
+        <td th:text="${rep.version}"></td>
     </tr>
+    </tbody>
 </table>
 </body>
 </html>

@@ -9,11 +9,13 @@
     <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>Category</th>
         <th>YouTube Link</th>
     </tr>
     <tr th:each="content : ${contentList}">
         <td th:text="${content.title}"></td>
         <td th:text="${content.description}"></td>
+        <td th:text="${content.category}"></td>
         <td><a th:href="${content.youtubeLink}" target="_blank">View</a></td>
     </tr>
 </table>
