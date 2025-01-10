@@ -5,7 +5,7 @@ public class Equipment {
     private boolean logo;
     private boolean miniStudio;
     private boolean inSchoolRecording;
-    private boolean uploadOnYouTube;
+    private boolean uploadOnYoutube;
     private boolean recordingInsideOutside;
     private boolean externalAgencyCollaboration;
     private boolean greenScreenTechnology;
@@ -43,12 +43,10 @@ public class Equipment {
         this.inSchoolRecording = inSchoolRecording;
     }
 
-    public boolean isUploadOnYouTube() {
-        return uploadOnYouTube;
-    }
+    public boolean isUploadOnYoutube() { return uploadOnYoutube; }
 
-    public void setUploadOnYouTube(boolean uploadOnYouTube) {
-        this.uploadOnYouTube = uploadOnYouTube;
+    public void setUploadOnYoutube(boolean uploadOnYoutube) {
+        this.uploadOnYoutube = uploadOnYoutube;
     }
 
     public boolean isRecordingInsideOutside() {

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+</head>
+<body>
+<h1>Profile</h1>
+
+<ul>
+    <li><a href="/profile/update">Update Profile</a></li>
+    <li th:if="${role == 'SCHOOL_REP'}"><a href="/profile/equipment/update">Update Equipment List</a></li>
+    <li th:if="${role == 'SCHOOL_REP' || role == 'ADMIN'}"><a href="/profile/schools">View School List</a></li>
+</ul>
+
+<p th:if="${message}" th:text="${message}"></p>
+<p th:if="${error}" th:text="${error}"></p>
+
+</body>
+</html>

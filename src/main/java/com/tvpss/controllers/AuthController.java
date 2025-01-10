@@ -1,6 +1,7 @@
 package com.tvpss.controllers;
 
 import com.tvpss.models.User;
+import com.tvpss.repositories.EquipmentRepository;
 import com.tvpss.repositories.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,9 +18,11 @@ import java.util.Collections;
 public class AuthController {
 
     private final UserRepository userRepository;
+    private final EquipmentRepository equipmentRepository;
 
-    public AuthController(UserRepository userRepository) {
+    public AuthController(UserRepository userRepository, EquipmentRepository equipmentRepository) {
         this.userRepository = userRepository;
+        this.equipmentRepository = equipmentRepository;
     }
 
     @PostMapping("/login")
@@ -51,7 +54,6 @@ public class AuthController {
         return "login";
     }
 
-
     @PostMapping("/register")
     public String register(@RequestParam String username,
                            @RequestParam String password,
@@ -70,11 +72,20 @@ public class AuthController {
             return "login";
         }
 
+        // Save the new user
         User newUser = new User(username, password, role, name, email, phoneNumber);
         userRepository.save(newUser);
+
+        // If the role is SCHOOL_REP, create a new equipment row
+        if (role.equals("SCHOOL_REP")) {
+            User savedUser = userRepository.findByUsername(username); // Get the saved user's ID
+            equipmentRepository.createEquipment(savedUser.getId());
+        }
+
         model.addAttribute("message", "User registered successfully! Please log in.");
         return "login";
     }
+
 
     @PostMapping("/logout")
     public String logout(HttpSession session, Model model) {

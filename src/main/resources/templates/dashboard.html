@@ -9,13 +9,12 @@
 
 <h2>Available Actions</h2>
 <ul>
-    <!-- Add role-based actions -->
-    <li th:if="${role == 'SCHOOL_REP' || role == 'ADMIN'}">
-        <a href="equipment/schools">View School List</a>
+    <!-- Profile Link -->
+    <li>
+        <a href="/profile">Profile</a>
     </li>
-    <li th:if="${role == 'SCHOOL_REP'}">
-        <a href="/equipment/update">Update Equipment List</a>
-    </li>
+
+    <!-- Other Links -->
     <li th:if="${role == 'ADMIN'}">
         <a href="/content/manage">Manage Content</a>
     </li>
