@@ -35,6 +35,8 @@ public class ProfileController {
 
         User user = userRepository.findByUsername((String) session.getAttribute("username"));
         model.addAttribute("user", user);
+        model.addAttribute("username", session.getAttribute("username"));
+        model.addAttribute("role", session.getAttribute("role"));
         return "update_profile";
     }
 
@@ -52,6 +54,8 @@ public class ProfileController {
 
         userRepository.updateUserDetails(userId, name, email, phoneNumber);
         model.addAttribute("message", "Profile updated successfully.");
+        model.addAttribute("username", session.getAttribute("username"));
+        model.addAttribute("role", session.getAttribute("role"));
         return "redirect:/profile";
     }
 
@@ -67,6 +71,8 @@ public class ProfileController {
         Equipment equipment = equipmentRepository.findEquipmentByUserId(userId);
         // System.out.println(equipment.isGreenScreenTechnology());
         model.addAttribute("equipment", equipment);
+        model.addAttribute("username", session.getAttribute("username"));
+        model.addAttribute("role", session.getAttribute("role"));
         return "update_equipment";
     }
 
@@ -100,13 +106,16 @@ public class ProfileController {
                 updatedGreenScreenTechnology);
 
         model.addAttribute("message", "Equipment updated successfully.");
+        model.addAttribute("username", session.getAttribute("username"));
+        model.addAttribute("role", session.getAttribute("role"));
         return "redirect:/profile";
     }
 
 
     // UC014: View School List
     @GetMapping("/schools")
-    public String viewSchoolList(Model model) {
+    public String viewSchoolList(HttpSession session,
+                                 Model model) {
         // Fetch school representatives and their equipment details from the repository
         List<Map<String, Object>> schoolReps = equipmentRepository.getSchoolRepresentativesWithEquipment();
 
@@ -136,6 +145,8 @@ public class ProfileController {
 
         // Add school representatives with their calculated versions to the model
         model.addAttribute("schoolReps", schoolReps);
+        model.addAttribute("username", session.getAttribute("username"));
+        model.addAttribute("role", session.getAttribute("role"));
         return "school_list";
     }
 

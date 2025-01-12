@@ -5,6 +5,7 @@ public class Content {
     private String title;
     private String description;
     private String youtubeLink;
+    private String youtubeId;
     private String status; // PENDING, APPROVED, REJECTED
     private int userId; // Foreign key to the user who uploaded the content
     private String category; // New field
@@ -40,6 +41,14 @@ public class Content {
 
     public void setYoutubeLink(String youtubeLink) {
         this.youtubeLink = youtubeLink;
+    }
+
+    public String getYoutubeId() {
+        return youtubeId;
+    }
+
+    public void setYoutubeId(String youtubeId) {
+        this.youtubeId = youtubeId;
     }
 
     public String getStatus() {

@@ -87,7 +87,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session, Model model) {
         if (session != null) {
             session.invalidate(); // Invalidate the session to log out the user
