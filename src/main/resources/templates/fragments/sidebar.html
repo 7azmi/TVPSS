@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        rel="stylesheet">
+
+<link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet"/>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJWd3JoLIl3qxF9/h9slJu5c+ZIrTrp9cZ4cgK"
+      crossorigin="anonymous"/>
+
+<nav class="sidebar">
+    <div class="logo">TVPSS</div>
+    <ul class="menu">
+        <li><a href="/dashboard"> <i
+                class="fas fa-tachometer-alt  fa-fw menu-icon"></i> Dashboard
+        </a></li>
+        <li><a href="/profile"> <i class="fas fa-user  fa-fw menu-icon"></i>
+            Profile
+        </a></li>
+        <li th:if="${role == 'ADMIN'}"><a href="/content/manage"> <i class="fas  fa-cogs  fa-fw menu-icon"></i>
+            Manage Content
+        </a></li>
+        <li th:if="${role == 'SCHOOL_REP'}"><a href="/content/upload"> <i class="fas fa-upload  fa-fw menu-icon"></i>
+            Upload Content
+        </a></li>
+        <li th:if="${role == 'STUDENT' || role == 'SCHOOL_REP' || role == 'ADMIN'}"><a href="/content/library"> <i
+                class="fas fa-book  fa-fw menu-icon"></i>
+            Content Library
+        </a></li>
+        <li th:if="${role == 'ADMIN'}"><a href="/profile/schools"> <i class="fas fa-list  fa-fw menu-icon"></i>
+            School Lists
+        </a></li>
+        <li th:if="${role == 'ADMIN'}"><a href="/analytics"> <i class="fas fa-chart-bar  fa-fw menu-icon"></i>
+            Analytics
+        </a></li>
+        <li th:if="${role == 'STUDENT' || role == 'SCHOOL_REP' || role == 'ADMIN'}"><a href="/auth/logout"> <i
+                class="fas fa-sign-out-alt  fa-fw menu-icon"></i>
+            Logout
+        </a></li>
+    </ul>
+</nav>
+</html>

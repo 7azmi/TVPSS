@@ -2,9 +2,111 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login & Registration</title>
-    <link rel="stylesheet" href="/static/css/main.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4e73df;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .form-container h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f8f9fc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4e73df;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #375ac3;
+        }
+
+        .toggle-btn {
+            background: none;
+            color: #4e73df;
+            border: none;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .toggle-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Error and Message Styles */
+        p {
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        /* Form Switching */
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+<div class="form-container">
 <h1>Login & Registration</h1>
 
 <!-- Display messages for login/registration -->
@@ -13,6 +115,7 @@
 
 
 <!-- Login Form -->
+    <div id="login-form">
 <h2>Login</h2>
 <form action="/auth/login" method="post">
     <label for="username">Username:</label>
@@ -21,8 +124,11 @@
     <input type="password" id="password" name="password" required><br><br>
     <button type="submit">Login</button>
 </form>
+        <button class="toggle-btn" onclick="toggleForm('register')">Don't have an account? Register</button>
+    </div>
 
 <!-- Registration Form -->
+    <div id="register-form" class="hidden">
 <h2>Register</h2>
 <form action="/auth/register" method="post">
     <label for="register-username">Username:</label>
@@ -42,5 +148,22 @@
     <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
     <button type="submit">Register</button>
 </form>
+        <button class="toggle-btn" onclick="toggleForm('login')">Already have an account? Login</button>
+    </div>
+</div>
+<script>
+    function toggleForm(formType) {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        if (formType === 'login') {
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        } else if (formType === 'register') {
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        }
+    }
+</script>
 </body>
 </html>

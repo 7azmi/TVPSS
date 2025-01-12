@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        rel="stylesheet">
+
+<link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet"/>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJWd3JoLIl3qxF9/h9slJu5c+ZIrTrp9cZ4cgK"
+      crossorigin="anonymous"/>
+
+<header class="top-bar">
+    <div class="left-section">
+        <i class="fa fa-bars menu-icon" alt="Menu Icon"
+           id="menu-toggle"></i>
+
+        <div class="search-bar">
+            <i class="fa fa-search search-icon" alt="Search Icon"></i>
+            <input type="text" placeholder="Search">
+        </div>
+    </div>
+    <div class="right-section">
+        <div class="notification">
+            <img src="/icons/noti-icon.svg" alt="Notification Icon"
+                 class="noti-icon"> <span class="notification-badge">6</span>
+        </div>
+        <div class="language">
+            <img src="/icons/english-icon.svg" alt="Flag Icon"
+                 class="flag-icon"> <span>English</span> <img
+                src="/icons/dropdown-icon.svg" alt="Dropdown Icon"
+                class="dropdown-icon">
+        </div>
+        <div class="user-profile">
+            <img src="/icons/person-icon.png" alt="User Icon" class="user-icon">
+            <div class="user-info">
+                <span th:text="${username}"></span> <span th:text="${role}"></span>
+            </div>
+            <img src="/icons/more-icon.svg" alt="More Icon" class="more-icon">
+            <ul class="dropdown-menu hidden">
+                <li><a href="/profile"> <i class="fas fa-user menu-icon"></i>
+                    Profile
+                </a></li>
+                <li th:if="${role == 'ADMIN'}"><a href="/content/manage"> <i class="fas fa-cogs menu-icon"></i>
+                    Manage Content
+                </a></li>
+                <li th:if="${role == 'STUDENT' || role == 'SCHOOL_REP' || role == 'ADMIN'}"><a href="/content/library"> <i class="fas fa-book menu-icon"></i>
+                    Content Library
+                </a></li>
+                <li th:if="${role == 'SCHOOL_REP'}"><a href="/content/upload"> <i
+                        class="fas fa-upload menu-icon"></i> Upload Content
+                </a></li>
+                <li  th:if="${role == 'STUDENT' || role == 'SCHOOL_REP' || role == 'ADMIN'}"><a href="/auth/logout"> <i class="fas fa-sign-out-alt menu-icon"></i>
+                    Logout
+                </a></li>
+
+                <p th:if="${message}" th:text="${message}"></p>
+                <p th:if="${error}" th:text="${error}"></p>
+
+            </ul>
+        </div>
+    </div>
+</header>
+</html>
