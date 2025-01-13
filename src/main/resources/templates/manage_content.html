@@ -1,33 +1,211 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Manage Content</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Library</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Chart.js for graphs -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+            rel="stylesheet"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJWd3JoLIl3qxF9/h9slJu5c+ZIrTrp9cZ4cgK"
+          crossorigin="anonymous"/>
+    <style>
+        .manage-content {
+            min-width: 900px;
+            margin: 0 auto;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .manage-content h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #4e73df;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 95%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 2% auto;
+
+        }
+
+        thead {
+            background-color: #f4f4f4;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        thead th[colspan="2"] {
+            text-align: center;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody td {
+            padding: 12px;
+            font-size: 14px;
+            color: #555555;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tbody a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        tbody a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100px; /* Fixed width for buttons */
+        }
+
+        button.approve {
+            background-color: #28a745;
+            color: white;
+        }
+
+        button.approve:hover {
+            background-color: #218838;
+        }
+
+        button.decline {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        button.decline:hover {
+            background-color: #c82333;
+        }
+
+        /* Fixed column sizes for Approve and Decline */
+        td:nth-child(4),
+        td:nth-child(5),
+        th:nth-child(4),
+        th:nth-child(5) {
+            width: 120px; /* Matches button width plus padding */
+            text-align: center;
+        }
+
+        /* Adjust column widths for title, description, and YouTube link */
+        td:nth-child(1) {
+            width: 20%;
+        }
+
+        td:nth-child(2) {
+            width: 30%;
+        }
+
+        td:nth-child(3) {
+            width: 25%;
+        }
+
+        th:nth-child(1),
+        th:nth-child(2),
+        th:nth-child(3) {
+            text-align: center;
+        }
+
+        /* Center align Action column header */
+        th[colspan="2"] {
+            text-align: center;
+        }
+
+        /* Center content for uniform alignment */
+        tbody td,
+        thead th {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+    </style>
+
 </head>
+
 <body>
-<h1>Manage Content</h1>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>YouTube Link</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="content : ${pendingContent}">
-        <td th:text="${content.title}"></td>
-        <td th:text="${content.description}"></td>
-        <td>
-            <a th:if="${content.youtubeLink != null}" th:href="${content.youtubeLink}" target="_blank">View</a>
-            <span th:if="${content.youtubeLink == null}">No Link</span>
-        </td>
-        <td>
-            <form method="post" th:action="@{'/content/manage/' + ${content.id} + '/approve'}">
-                <button type="submit">Approve</button>
-            </form>
-            <form method="post" th:action="@{'/content/manage/' + ${content.id} + '/reject'}">
-                <button type="submit">Reject</button>
-            </form>
-        </td>
-    </tr>
-</table>
+<div class="dashboard" id="content">
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: header"></div>
+
+        <div class="mainpage-container">
+            <section class="mainpage">
+                <div class="manage-content">
+                    <h1>Manage Content</h1>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>YouTube Link</th>
+                            <th colspan="2">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="content : ${pendingContent}">
+                            <td th:text="${content.title}"></td>
+                            <td th:text="${content.description}"></td>
+                            <td>
+                                <a th:if="${content.youtubeLink != null}" th:href="${content.youtubeLink}"
+                                   target="_blank">View</a>
+                                <span th:if="${content.youtubeLink == null}">No Link</span>
+                            </td>
+                            <td>
+                                <form method="post" th:action="@{'/content/manage/' + ${content.id} + '/approve'}">
+                                    <button class="approve" type="submit">Approve</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" th:action="@{'/content/manage/' + ${content.id} + '/reject'}">
+                                    <button class="decline" type="submit">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script src="/js/scripts.js"></script>
+
 </body>
 </html>

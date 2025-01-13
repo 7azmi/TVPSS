@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics</title>
+  <link rel="stylesheet" href="/css/analytics.css">
+  <!-- Chart.js for graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <link
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          rel="stylesheet">
+
+  <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+          rel="stylesheet"/>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJWd3JoLIl3qxF9/h9slJu5c+ZIrTrp9cZ4cgK"
+        crossorigin="anonymous"/>
+
+
+</head>
+<body>
+<div class="dashboard">
+  <!-- Sidebar -->
+  <div th:replace="fragments/sidebar"></div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div th:replace="fragments/topbar :: header"></div>
+
+    <div class="analytics-container" id="analytics-container">
+      <section class="analytics">
+        <h2>Analytics</h2>
+        <div class="stats">
+          <div class="stat active-users">
+            <div class="stat-icon">
+              <img src="/icons/user-icon.png" alt="User Icon">
+            </div>
+            <h3>Active Users</h3>
+            <p><span th:text="${analyticsData[0].formattedActiveUsers}"></span></p>
+            <small class="trend-positive"> <img
+                    src="/icons/up-arrow.png" alt="Up Arrow" class="arrow-icon">
+              <span th:text="${analyticsData[0].activeUsersChange}"></span>% from yesterday
+            </small>
+          </div>
+          <div class="stat total-uploads">
+            <div class="stat-icon">
+              <img src="/icons/uploads-icon.png" alt="Uploads Icon">
+            </div>
+            <h3>Total Uploads</h3>
+            <p><span th:text="${analyticsData[0].formattedTotalUploads}"></span></p>
+            <small class="trend-positive"> <img
+                    src="/icons/up-arrow.png" alt="Up Arrow" class="arrow-icon">
+              <span th:text="${analyticsData[0].totalUploadsChange}"></span>% from past week
+            </small>
+          </div>
+          <div class="stat engagement-rate">
+            <div class="stat-icon">
+              <img src="/icons/engagement-icon.png" alt="Engagement Icon">
+            </div>
+            <h3>Engagement Rate</h3>
+            <p><span th:text="${analyticsData[0].engagementRate}"></span>%</p>
+            <small class="trend-negative"> <img
+                    src="/icons/down-arrow.png" alt="Down Arrow" class="arrow-icon">
+              <span th:text="${analyticsData[0].engagementRateChange}"></span>% from yesterday
+            </small>
+          </div>
+          <div class="stat total-views">
+            <div class="stat-icon">
+              <img src="/icons/views-icon.png" alt="Views Icon">
+            </div>
+            <h3>Total Views</h3>
+            <p><span th:text="${analyticsData[0].formattedTotalViews}"></span></p>
+            <small class="trend-positive"> <img
+                    src="/icons/up-arrow.png" alt="Up Arrow" class="arrow-icon">
+              <span th:text="${analyticsData[0].totalViewsChange}"></span>% from yesterday
+            </small>
+          </div>
+        </div>
+
+        <div class="chart">
+          <div class="chart-header">
+            <h3>Engagement Rate</h3>
+            <select id="engagementRateFilter" class="month-filter">
+              <option value="January" selected>January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
+          <canvas id="engagementRateChart"></canvas>
+        </div>
+
+        <div class="chart">
+          <div class="chart-header">
+            <h3>Active Users</h3>
+            <select id="activeUsersFilter" class="month-filter">
+              <option value="January" selected>January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
+          <canvas id="activeUsersChart"></canvas>
+        </div>
+
+        <div class="chart">
+          <div class="chart-header">
+            <h3>Total Uploads</h3>
+            <select id="totalUploadsFilter" class="month-filter">
+              <option value="January" selected>January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
+          <canvas id="totalUploadsChart"></canvas>
+        </div>
+
+        <div class="chart">
+          <div class="chart-header">
+            <h3>Total Views</h3>
+            <select id="totalViewsFilter" class="month-filter">
+              <option value="January" selected>January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+          </div>
+          <canvas id="totalViewsChart"></canvas>
+        </div>
+
+
+        <button class="generate-report">Generate Report</button>
+      </section>
+    </div>
+  </div>
+</div>
+<div id="multiStatePopup" class="popup-container hidden">
+  <div class="popup-content">
+    <!-- Close Button -->
+    <span id="closePopupButton" class="close-btn">&times;</span>
+
+    <!-- Options State -->
+    <div id="optionsState" class="popup-section">
+      <h3>Select Report Type</h3>
+      <div class="report-options">
+        <button class="report-option" data-type="Active Users">Active
+          Users
+        </button>
+        <button class="report-option" data-type="Total Uploads">Total
+          Uploads
+        </button>
+        <button class="report-option" data-type="Engagement Rate">Engagement
+          Rate
+        </button>
+        <button class="report-option" data-type="Total Views">Total
+          Views
+        </button>
+        <button class="report-option" data-type="Total Schools">Total
+          Schools
+        </button>
+        <button class="report-option" data-type="Equipment">Equipment</button>
+      </div>
+      <p class="info-text">*You can choose multiple Report types</p>
+      <button id="startGenerating" class="generate-button">Generate
+        Now
+      </button>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="popup-section hidden">
+      <div class="spinner"></div>
+      <p class="loading-text">Generating Report...</p>
+    </div>
+
+    <!-- Success State -->
+    <div id="successState" class="popup-section hidden">
+      <h3 class="success-message">Report Generated Successfully</h3>
+      <button id="downloadReport" class="download-button">Download</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="/js/scripts.js" defer></script>
+
+<script src="/js/charts.js"></script>
+
+</body>
+</html>

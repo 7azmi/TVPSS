@@ -1,19 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Library</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Chart.js for graphs -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+            rel="stylesheet"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJWd3JoLIl3qxF9/h9slJu5c+ZIrTrp9cZ4cgK"
+          crossorigin="anonymous"/>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+        }
+
+
+
+        /* Main Content Styles */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .main-content h1 {
+            font-size: 24px;
+            color: #4e73df;
+            margin-bottom: 20px;
+        }
+
+        .profile ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile ul li {
+            margin: 10px 0;
+        }
+
+        .profile ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #4e73df;
+            background-color: #f8f9fc;
+            padding: 10px 15px;
+            border: 1px solid #d1d3e2;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .profile ul li a:hover {
+            background-color: #4e73df;
+            color: #ffffff;
+        }
+
+        .profile p {
+            font-size: 14px;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        /* Topbar Styles */
+        .topbar {
+            background-color: #ffffff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .topbar .user-info {
+            font-size: 14px;
+            color: #4e73df;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .profile ul li a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+    </style>
+
 </head>
+
 <body>
-<h1>Profile</h1>
+<div class="dashboard" id="content">
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar"></div>
 
-<ul>
-    <li><a href="/profile/update">Update Profile</a></li>
-    <li th:if="${role == 'SCHOOL_REP'}"><a href="/profile/equipment/update">Update Equipment List</a></li>
-    <li th:if="${role == 'SCHOOL_REP' || role == 'ADMIN'}"><a href="/profile/schools">View School List</a></li>
-</ul>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: header"></div>
 
-<p th:if="${message}" th:text="${message}"></p>
-<p th:if="${error}" th:text="${error}"></p>
+        <div class="mainpage-container">
+            <section class="mainpage">
+                <div class="profile">
+
+                    <h1>Profile</h1>
+
+                    <ul>
+                        <li><a href="/profile/update">Update Profile</a></li>
+                        <li th:if="${role == 'SCHOOL_REP'}"><a href=/profile/equipment/update>Update Equipment List</a>
+                        </li>
+                        <li th:if="${role == 'SCHOOL_REP' || role == 'ADMIN'}"><a href="/profile/schools">View School
+                            List</a>
+                        </li>
+                    </ul>
+
+                    <p th:if="${message}" th:text="${message}"></p>
+                    <p th:if="${error}" th:text="${error}"></p>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<script src="/js/scripts.js" defer></script>
 
 </body>
 </html>

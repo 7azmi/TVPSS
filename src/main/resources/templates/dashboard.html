@@ -1,37 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVPSS Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- Chart.js for graphs -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+            rel="stylesheet"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJWd3JoLIl3qxF9/h9slJu5c+ZIrTrp9cZ4cgK"
+          crossorigin="anonymous"/>
 </head>
+
+<style>
+    #content {
+        display: none; /* Hide content initially */
+    }
+</style>
+
 <body>
-<h1>Welcome, <span th:text="${username}"></span>!</h1>
-<p>Role: <span th:text="${role}"></span></p>
+<div id="loading">
+    <div class="spinner"></div>
+</div>
 
-<h2>Available Actions</h2>
-<ul>
-    <!-- Profile Link -->
-    <li>
-        <a href="/profile">Profile</a>
-    </li>
+<div class="dashboard" id="content">
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar"></div>
 
-    <!-- Other Links -->
-    <li th:if="${role == 'ADMIN'}">
-        <a href="/content/manage">Manage Content</a>
-    </li>
-    <li th:if="${role == 'STUDENT' || role == 'SCHOOL_REP' || role == 'ADMIN'}">
-        <a href="/content/library">View Content Library</a>
-    </li>
-    <li th:if="${role == 'SCHOOL_REP'}">
-        <a href="/content/upload">Upload Content</a>
-    </li>
-</ul>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: header"></div>
 
-<!-- Logout Button -->
-<form method="post" action="/auth/logout">
-    <button type="submit">Logout</button>
-</form>
+        <div class="mainpage-container">
+            <section class="mainpage">
 
-<p th:if="${message}" th:text="${message}"></p>
-<p th:if="${error}" th:text="${error}"></p>
+                <section class="welcome-banner">
+                    <div class="welcome-text">
+                        <h1>Welcome to TVPSS</h1>
+                    </div>
+                    <img src="/icons/kementerian-logo.png"
+                         alt="Kementerian Pendidikan Malaysia">
+                    <div class="stat-card">
+                        <h2>Total Views</h2>
+                        <p>2,040</p>
+                        <small> <img src="/icons/up-arrow.png" alt="Trend Icon">
+                            1.8% Up from yesterday
+                        </small>
+                    </div>
+                </section>
+                <section class="recently-added-videos">
+                    <h2 class="section-title">Recently Added Videos</h2>
+                    <div class="video-group">
+                        <div class="video-card" th:each="content : ${contentList}">
+                            <!-- Video Link -->
+                            <a th:href="${content.youtubeLink}" target="_blank">
+                                <!-- Thumbnail -->
+                                <div class="thumbnail-wrapper">
+                                    <img th:src="'https://img.youtube.com/vi/' + ${content.youtubeId} + '/0.jpg'"
+                                         th:alt="'Thumbnail for ' + ${content.title}" />
+                                </div>
+                            </a>
+                            <!-- Video Title -->
+                            <h3>
+                                <a th:href="${content.youtubeLink}" target="_blank" th:text="${content.title}"></a>
+                            </h3>
+                            <!-- Video Category -->
+                            <p class="video-category" th:text="${content.category}"></p>
+                            <!-- Video Description -->
+                            <p class="video-description" th:text="${content.description}"></p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </div>
+</div>
+<script src="/js/scripts.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('img'); // Select all images
+        const content = document.getElementById('content'); // The main content
+        const loading = document.getElementById('loading'); // Loading indicator
+
+        if (images.length === 0) {
+            // If there are no images, display the page immediately
+            loading.style.display = 'none';
+            content.style.display = 'block';
+            return;
+        }
+
+        // Create promises to track image loading
+        const imagePromises = Array.from(images).map(img => {
+            return new Promise((resolve) => {
+                if (img.complete) {
+                    resolve(); // Image is already loaded
+                } else {
+                    img.onload = resolve; // Resolve when loaded
+                    img.onerror = resolve; // Resolve even if there's an error
+                }
+            });
+        });
+
+        // Show the page after all images have been processed
+        Promise.all(imagePromises).then(() => {
+            loading.style.display = 'none'; // Hide loading indicator
+            content.style.display = 'block'; // Show main content
+        });
+    });
+</script>
+
 </body>
 </html>

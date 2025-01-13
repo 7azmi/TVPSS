@@ -1,4 +1,3 @@
-@charset "ISO-8859-1";
 /* General Reset */
 * {
     margin: 0;
@@ -30,7 +29,6 @@ body {
     width: 250px;
     background: #ffffff;
     border-right: 1px solid #eaeaea;
-    overflow-y: auto; /* Enable vertical scrolling */
     padding: 20px;
     transform: translateX(0);
     transition: transform 0.3s ease;
@@ -87,14 +85,14 @@ body {
 }
 
 
-/* mainpage Container Adjustment for Sidebar */
-.mainpage-container {
+/* Analytics Container Adjustment for Sidebar */
+.analytics-container {
     transition: margin-left 0.1s ease; /* Smooth transition for movement */
     margin-left: 250px; /* Default position when sidebar is expanded */
     width: calc(100% - 250px); /* Adjust width to fit alongside the expanded sidebar */
 }
 
-.mainpage-container.expanded {
+.analytics-container.expanded {
     margin-left: 0; /* Move the container when the sidebar is collapsed */
     width: 100%; /* Expand to full width */
 }
@@ -251,18 +249,17 @@ header {
     color: #6b7280;
 }
 
-/* mainpage Section */
-.mainpage {
+/* Analytics Section */
+.analytics {
     border-radius: 10px;
     padding: 20px;
-    min-width: 800px;
     /*
     background: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 	*/
 }
 
-.mainpage h2 {
+.analytics h2 {
     font-size: 1.5rem;
     margin-bottom: 20px;
     font-weight: 600;
@@ -400,6 +397,26 @@ button.generate-report:hover {
     position: relative;
 }
 
+/* Spinner */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3; /* Light gray */
+    border-top: 6px solid #2b3fec; /* Blue */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* Section visibility */
 .popup-section {
     display: none;
@@ -514,71 +531,6 @@ button.generate-report:hover {
 .dropdown-menu li:nth-child(4) .menu-icon {
     color: #ef4444; /* Red for Log Out */
 }
-
-/* School List Section */
-.school-list {
-    width: 100%; /* Ensure it spans the full container width */
-    max-width: 1400px; /* Set a maximum width for the entire stats area */
-    margin: 0px auto 30px auto ; /* Center the stats section */
-}
-/* Upload Content Form */
-.upload-content {
-    max-width: 1400px; /* Set a maximum width for the entire stats area */
-    width: 500px; /* Ensure it spans the full container width */
-
-    margin: 0px auto 30px auto ; /* Center the stats section */
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.upload-content h1 {
-    color: #4e73df;
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-
-.upload-content label {
-    display: block;
-    font-size: 14px;
-    color: #555;
-    text-align: left;
-    margin-bottom: 5px;
-}
-
-.upload-content input,
-.upload-content select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    background-color: #f8f9fc;
-    font-size: 14px;
-}
-
-/* Button Styling */
-.upload-content button {
-    width: 100%;
-    background-color: #4e73df;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-}
-
-.upload-content button:hover {
-    background-color: #375ac3;
-}
-
-
-
 
 
 /* Stats Section */
@@ -912,6 +864,7 @@ button.generate-report:hover {
     position: relative;
     overflow: hidden;
     width: 100%; /* Full width inside shared container */
+    margin: 40px 0px;
 }
 
 .recently-added-videos::before {
@@ -1027,13 +980,6 @@ button.generate-report:hover {
     margin-bottom: 10px;
 }
 
-.video-card .video-category,
-.video-card .video-description {
-    font-size: 0.9rem;
-    margin: 10px;
-    color: #666;
-}
-
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -1041,7 +987,6 @@ button.generate-report:hover {
         flex-direction: column;
         align-items: flex-start;
         text-align: left;
-        margin: 40px 0;
     }
 
     .stat-card {
@@ -1053,154 +998,6 @@ button.generate-report:hover {
         flex-direction: column;
     }
 }
-
-/* Content Library Section */
-.content-library {
-    min-width: 1000px;
-    margin: 0 auto;
-    overflow-x: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-.content-library h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #4e73df;
-    margin-bottom: 20px;
-}
-
-
-
-
-
-.school-list {
-    min-width: 900px;
-    margin: 0 auto;
-    overflow-x: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.school-list h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #4e73df;
-    margin-bottom: 20px;
-}
-
-/* Table Styles */
-table {
-    width: 95%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 2% auto;
-}
-
-thead {
-    background-color: #f4f4f4;
-}
-
-thead th {
-    text-align: left;
-    padding: 12px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-}
-
-tbody tr {
-    border-bottom: 1px solid #e0e0e0;
-}
-
-tbody td {
-    padding: 12px;
-    font-size: 14px;
-    color: #555;
-}
-
-tbody td a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-tbody td a:hover {
-    text-decoration: underline;
-}
-
-/* Column Sizing */
-td:nth-child(1),
-th:nth-child(1) {
-    width: 20%;
-}
-
-td:nth-child(2),
-th:nth-child(2) {
-    width: 30%;
-}
-
-td:nth-child(3),
-th:nth-child(3) {
-    width: 25%;
-}
-
-td:nth-child(4),
-th:nth-child(4) {
-    width: 15%;
-}
-
-td:nth-child(5),
-th:nth-child(5) {
-    width: 10%;
-}
-
-/* Responsive Layout */
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0; /* No space for sidebar on small screens */
-    }
-
-    table {
-        font-size: 12px;
-    }
-
-    td,
-    th {
-        padding: 8px;
-    }
-}
-
-
-
-#loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa;
-    font-size: 1.5rem;
-}
-
-.spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #007bff;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -1227,4 +1024,3 @@ th:nth-child(5) {
         padding: 15px;
     }
 }
-

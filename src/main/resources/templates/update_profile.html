@@ -1,18 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Update Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Library</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Chart.js for graphs -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+            rel="stylesheet"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMJWd3JoLIl3qxF9/h9slJu5c+ZIrTrp9cZ4cgK"
+          crossorigin="anonymous"/>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .update-profile {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        .update-profile h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f8f9fc;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+        }
+
+        button.update-button {
+            background-color: #4e73df;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        button.update-button:hover {
+            background-color: #375ac3;
+        }
+
+    </style>
+
 </head>
+
 <body>
-<h1>Update Profile</h1>
-<form method="post" action="/profile/update">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" th:value="${user.name}" required><br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" th:value="${user.email}" required><br>
-    <label for="phoneNumber">Phone Number:</label>
-    <input type="text" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" required><br>
-    <button type="submit">Update</button>
-</form>
+<div class="dashboard" id="content">
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div th:replace="fragments/topbar :: header"></div>
+
+        <div class="mainpage-container">
+            <section class="mainpage">
+
+                <div class="update-profile">
+
+                    <h1>Update Profile</h1>
+                    <form method="post" action="/profile/update">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" th:value="${user.name}" required><br>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" th:value="${user.email}" required><br>
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}"
+                               required><br>
+                        <button class="update-button" type="submit">Update</button>
+                    </form>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<script src="/js/scripts.js"></script>
+
 </body>
 </html>
